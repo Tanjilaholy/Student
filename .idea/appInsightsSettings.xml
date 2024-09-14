@@ -9,9 +9,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.example.signuplogin" />
-                  <option name="mobileSdkAppId" value="1:804373046398:android:0a25d40832fed9ab34e42f" />
-                  <option name="projectId" value="signup-login-f6983" />
-                  <option name="projectNumber" value="804373046398" />
+                  <option name="mobileSdkAppId" value="1:275247438214:android:a4d41db5d6e97aa6a3f407" />
+                  <option name="projectId" value="student-portal-b7501" />
+                  <option name="projectNumber" value="275247438214" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

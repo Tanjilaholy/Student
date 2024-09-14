@@ -1,6 +1,6 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.google.gms.google.services)
+    id("com.android.application")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -44,6 +44,9 @@ dependencies {
     implementation(libs.firebase.database)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
+    implementation("com.google.firebase:firebase-database:21.0.0")
+    implementation ("com.google.firebase:firebase-storage:21.0.0")
+    implementation("com.squareup.picasso:picasso:2.71828")
 
     androidTestImplementation(libs.espresso.core)
 }
