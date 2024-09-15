@@ -13,6 +13,24 @@
         android:theme="@style/Theme.SignupLogin"
         tools:targetApi="31">
         <activity
+            android:name=".scheduleadminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".resultadminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".regiadminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".waiveradminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".calenderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".routineActivity"
+            android:exported="false" />
+        <activity
             android:name=".adminActivity"
             android:exported="false" />
         <activity
