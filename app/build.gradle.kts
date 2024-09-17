@@ -44,9 +44,11 @@ dependencies {
     implementation(libs.firebase.database)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
+    implementation("androidx.fragment:fragment:1.8.3")
     implementation("com.google.firebase:firebase-database:21.0.0")
     implementation ("com.google.firebase:firebase-storage:21.0.0")
     implementation("com.squareup.picasso:picasso:2.71828")
+
 
     androidTestImplementation(libs.espresso.core)
 }
