@@ -1,19 +1,59 @@
 package com.example.signuplogin;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class WaiverFragment extends Fragment {
 
+    private TextView waiverCodeTextView, waiverNameTextView, totalWaiverTextView, isActiveTextView;
+    private DatabaseReference databaseReference;
+
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_waiver, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_waiver, container, false);
+
+        waiverCodeTextView = view.findViewById(R.id.waiverCode);
+        waiverNameTextView = view.findViewById(R.id.waiverName);
+        totalWaiverTextView = view.findViewById(R.id.totalWaiver);
+        isActiveTextView = view.findViewById(R.id.isActive);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("waivers");
+        fetchWaiverData();
+
+        return view;
+    }
+
+    private void fetchWaiverData() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot waiverSnapshot : dataSnapshot.getChildren()) {
+                    String waiverCode = waiverSnapshot.child("waiverCode").getValue(String.class);
+                    String waiverName = waiverSnapshot.child("waiverName").getValue(String.class);
+                    String totalWaiver = waiverSnapshot.child("totalWaiver").getValue(String.class);
+                    boolean isActive = waiverSnapshot.child("isActive").getValue(Boolean.class);
+                    waiverCodeTextView.setText(waiverCode);
+                    waiverNameTextView.setText(waiverName);
+                    totalWaiverTextView.setText(totalWaiver);
+                    isActiveTextView.setText(isActive ? "Yes" : "No");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 }
