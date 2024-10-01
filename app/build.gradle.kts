@@ -42,6 +42,7 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.volley)
     implementation(libs.firebase.database)
+    implementation(libs.navigation.runtime)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     implementation("androidx.fragment:fragment:1.8.3")
