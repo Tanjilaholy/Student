@@ -12,13 +12,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:stretchColumns="1">
-
-            <!-- Semester Name -->
+            
             <TableRow>
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="174dp"
+                    android:layout_height="50dp"
                     android:padding="8dp"
+                    android:textSize="20sp"
                     android:text="Semester Name:"
                     android:textStyle="bold" />
 
@@ -26,6 +27,7 @@
                     android:id="@+id/semesterName"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
+                    android:textSize="20dp"
                     android:hint="Enter Semester Name"
                     android:padding="8dp" />
             </TableRow>
@@ -45,6 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
+                    android:textSize="16dp"
                     android:text="Registration Start Date:"
                     android:textStyle="bold" />
 

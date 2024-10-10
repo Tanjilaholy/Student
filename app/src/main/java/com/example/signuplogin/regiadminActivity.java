@@ -1,11 +1,8 @@
 package com.example.signuplogin;
 
-import static java.security.AccessController.getContext;
-
 import android.os.Bundle;
-import android.view.LayoutInflater;
+
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -14,151 +11,188 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class regiadminActivity extends AppCompatActivity {
 
-    private EditText semesterNameEditText, semesterNumberEditText, totalCreditEditText;
-    private EditText courseCodeEditText, courseTitleEditText, creditEditText;
-    private Button updateSemesterButton, addCourseButton, submitCoursesButton;
+public class regiadminActivity<Map> extends AppCompatActivity {
+
+    // UI elements
+    private EditText semesterName, semesterNumber, totalCredits, courseCode, courseTitle, credit;
+    private Button btnUpdateSemester, btnAddCourse, btnSubmitCourses;
     private TableLayout courseTableLayout;
-
+    // Firebase Database reference
     private DatabaseReference databaseReference;
-    private List<Map<String, Object>> courses = new ArrayList<>();
-
+    // ArrayList to hold offered courses
+    private ArrayList<Course> offeredCourses = new ArrayList<>();
+    // Counter for course table rows
+    private int courseCounter = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_regiadmin);
-
-        // Initialize views
-        semesterNameEditText = findViewById(R.id.semester_name);
-        semesterNumberEditText = findViewById(R.id.edit_semester_number);
-        totalCreditEditText = findViewById(R.id.edit_total_credit);
-        updateSemesterButton = findViewById(R.id.btn_update_semester);
-
-        courseCodeEditText = findViewById(R.id.edit_course_code);
-        courseTitleEditText = findViewById(R.id.edit_course_title);
-        creditEditText = findViewById(R.id.edit_credit);
-        addCourseButton = findViewById(R.id.btn_add_course);
-
-        courseTableLayout = findViewById(R.id.course_table_layout);
-        submitCoursesButton = findViewById(R.id.btn_submit_courses);
-
         // Initialize Firebase database reference
-        databaseReference = FirebaseDatabase.getInstance().getReference("courses");
-
-        // Update semester info
-        updateSemesterButton.setOnClickListener(v -> {
-            String semesterName = semesterNameEditText.getText().toString();
-            String semesterNumber = semesterNumberEditText.getText().toString();
-            String totalCredit = totalCreditEditText.getText().toString();
-
-            // Create a HashMap to store semester data
-            Map<String, Object> semesterData = new HashMap<>();
-            semesterData.put("semesterName", semesterName);
-            semesterData.put("semesterNumber", semesterNumber);
-            semesterData.put("totalCredit", totalCredit);
-
-            // Update semester info in the database
-            databaseReference.child("semesterInfo").setValue(semesterData)
-                    .addOnSuccessListener(aVoid -> Toast.makeText(regiadminActivity.this, "Semester info updated", Toast.LENGTH_SHORT).show())
-                    .addOnFailureListener(e -> Toast.makeText(regiadminActivity.this, "Error updating semester info: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        // Initialize UI elements
+        semesterName = findViewById(R.id.semester_name);
+        semesterNumber = findViewById(R.id.edit_semester_number);
+        totalCredits = findViewById(R.id.edit_total_credit);
+        courseCode = findViewById(R.id.edit_course_code);
+        courseTitle = findViewById(R.id.edit_course_title);
+        credit = findViewById(R.id.edit_credit);
+        btnUpdateSemester = findViewById(R.id.btn_update_semester);
+        btnAddCourse = findViewById(R.id.btn_add_course);
+        btnSubmitCourses = findViewById(R.id.btn_submit_courses);
+        courseTableLayout = findViewById(R.id.course_table_layout);
+        // Add a new course on button click
+        btnAddCourse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addCourseToTable();
+            }
         });
-
-        // Add course
-        addCourseButton.setOnClickListener(v -> {
-            String courseCode = courseCodeEditText.getText().toString();
-            String courseTitle = courseTitleEditText.getText().toString();
-            double credit = Double.parseDouble(creditEditText.getText().toString());
-
-            Map<String, Object> course = new HashMap<>();
-            course.put("courseCode", courseCode);
-            course.put("courseTitle", courseTitle);
-            course.put("credit", credit);
-
-            courses.add(course);
-            addCourseToTable(course);
-
-            // Clear input fields
-            courseCodeEditText.setText("");
-            courseTitleEditText.setText("");
-            creditEditText.setText("");
+        // Submit courses to the database on button click
+        btnSubmitCourses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitCoursesToDatabase();
+            }
         });
-
-        // Submit courses
-        submitCoursesButton.setOnClickListener(v -> {
-            // Get the semester information
-            String semesterName = semesterNameEditText.getText().toString();
-            String semesterNumber = semesterNumberEditText.getText().toString();
-            String totalCredit = totalCreditEditText.getText().toString();
-
-            // Create a HashMap to store semester data
-            Map<String, Object> semesterData = new HashMap<>();
-            semesterData.put("semesterName", semesterName);
-            semesterData.put("semesterNumber", semesterNumber);
-            semesterData.put("totalCredit", totalCredit);
-
-            // Create a HashMap to store all courses for the semester
-            Map<String, Object> allCoursesData = new HashMap<>();
-            allCoursesData.put("semesterInfo", semesterData); // Store semester info
-            allCoursesData.put("courses", courses); // Store the list of courses
-
-            // Upload all data to the database under a unique semester key
-            String semesterKey = semesterName + "_" + semesterNumber; // Create a unique key for the semester
-            databaseReference.child(semesterKey).setValue(allCoursesData)
-                    .addOnSuccessListener(aVoid -> {
-                        Toast.makeText(regiadminActivity.this, "Courses and semester info submitted", Toast.LENGTH_SHORT).show();
-                        // Clear input fields or perform other actions after successful submission
-                        courses.clear(); // Clear the courses list
-                        courseTableLayout.removeAllViews(); // Clear the table layout
-                        // ... (Clear other input fields as needed) ...
-                    })
-                    .addOnFailureListener(e -> Toast.makeText(regiadminActivity.this, "Error submitting data: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+        // Update semester information on button click
+        btnUpdateSemester.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateSemesterInfo();
+            }
         });
     }
-
-    private void addCourseToTable(Map<String, Object> course) {
-        TableRow row = new TableRow(this);
-
-        TextView serialTextView = new TextView(this);
-        serialTextView.setText(String.valueOf(courseTableLayout.getChildCount())); // Serial number
-        serialTextView.setPadding(8, 8, 8, 8);
-        row.addView(serialTextView);
-
-        TextView courseCodeTextView = new TextView(this);
-        courseCodeTextView.setText((String) course.get("courseCode"));
-        courseCodeTextView.setPadding(8, 8, 8, 8);
-        row.addView(courseCodeTextView);
-
-        TextView courseTitleTextView = new TextView(this);
-        courseTitleTextView.setText((String) course.get("courseTitle"));
-        courseTitleTextView.setPadding(8, 8, 8, 8);
-        row.addView(courseTitleTextView);
-
-        TextView creditTextView = new TextView(this);
-        creditTextView.setText(String.valueOf(course.get("credit")));
-        creditTextView.setPadding(8, 8, 8, 8);
-        row.addView(creditTextView);
-
+    // Method to add a course to the table
+    private void addCourseToTable() {
+        String code = courseCode.getText().toString();
+        String title = courseTitle.getText().toString();
+        String creditValue = credit.getText().toString();
+        if (code.isEmpty() || title.isEmpty() || creditValue.isEmpty()) {
+            Toast.makeText(this, "Please fill in all course fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        // Add the course to the offeredCourses list
+        offeredCourses.add(new Course(code, title, creditValue));
+        // Create a new table row
+        TableRow tableRow = new TableRow(this);
+        // Create TextViews for course details
+        TextView numberView = new TextView(this);
+        numberView.setText(String.valueOf(courseCounter++));
+        TextView codeView = new TextView(this);
+        codeView.setText(code);
+        TextView titleView = new TextView(this);
+        titleView.setText(title);
+        TextView creditView = new TextView(this);
+        creditView.setText(creditValue);
         CheckBox checkBox = new CheckBox(this);
-        checkBox.setPadding(8, 8, 8, 8);
-        row.addView(checkBox);
-
-        courseTableLayout.addView(row);
+        // Add views to the table row
+        tableRow.addView(numberView);
+        tableRow.addView(codeView);
+        tableRow.addView(titleView);
+        tableRow.addView(creditView);
+        tableRow.addView(checkBox);
+        // Add the row to the table layout
+        courseTableLayout.addView(tableRow);
+        // Clear the input fields
+        courseCode.setText("");
+        courseTitle.setText("");
+        credit.setText("");
+    }
+    // Method to submit the courses to Firebase
+    private void submitCoursesToDatabase() {
+        if (offeredCourses.isEmpty()) {
+            Toast.makeText(this, "No courses to submit", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        for (Course course : offeredCourses) {
+            // Generate a unique ID for each course
+            String courseId = databaseReference.push().getKey();
+            // Submit the course data to Firebase under the unique courseId
+            databaseReference.child("OfferedCourses").child(courseId).setValue(course)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(regiadminActivity.this, "Courses Submitted Successfully", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(regiadminActivity.this, "Error Submitting Courses", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+        offeredCourses.clear(); // Clear the course list after submission
+        courseTableLayout.removeViews(1, courseCounter - 1); // Clear the table rows
+        courseCounter = 1; // Reset the counter
+    }
+    // Method to update semester information in Firebase
+    private void updateSemesterInfo() {
+        String name = semesterName.getText().toString();
+        String number = semesterNumber.getText().toString();
+        String totalCredit = totalCredits.getText().toString();
+        if (name.isEmpty() || number.isEmpty() || totalCredit.isEmpty()) {
+            Toast.makeText(this, "Please fill in all semester fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        // Create a Semester object to store semester details
+        Semester semester = new Semester(name, number, totalCredit);
+        // Store the semester data in Firebase
+        databaseReference.child("SemesterInfo").setValue(semester)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(regiadminActivity.this, "Semester Info Updated Successfully", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(regiadminActivity.this, "Error Updating Semester Info", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+    // Inner class to represent a course
+    public class Course {
+        private String courseCode;
+        private String courseTitle;
+        private String credit;
+        public Course(String courseCode, String courseTitle, String credit) {
+            this.courseCode = courseCode;
+            this.courseTitle = courseTitle;
+            this.credit = credit;
+        }
+        public String getCourseCode() {
+            return courseCode;
+        }
+        public String getCourseTitle() {
+            return courseTitle;
+        }
+        public String getCredit() {
+            return credit;
+        }
+    }
+    // Inner class to represent semester
+    public class Semester {
+        private String semesterName;
+        private String semesterNumber;
+        private String totalCredits;
+        public Semester(String semesterName, String semesterNumber, String totalCredits) {
+            this.semesterName = semesterName;
+            this.semesterNumber = semesterNumber;
+            this.totalCredits = totalCredits;
+        }
+        public String getSemesterName() {
+            return semesterName;
+        }
+        public String getSemesterNumber() {
+            return semesterNumber;
+        }
+        public String getTotalCredits() {
+            return totalCredits;
+        }
     }
 }
