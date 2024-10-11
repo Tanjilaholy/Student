@@ -34,12 +34,6 @@
                 android:text="All Registration"
                 android:textColor="@color/dark" />
         </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="#CCCCCC" />
 
         <TableLayout
             android:layout_width="match_parent"
@@ -58,6 +52,7 @@
 
                 <TextView
                     android:layout_width="wrap_content"
+                    android:id="@+id/S_N"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
                     android:text="" />
@@ -75,6 +70,7 @@
 
                 <TextView
                     android:layout_width="wrap_content"
+                    android:id="@+id/S_no"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
                     android:text="" />
@@ -92,6 +88,7 @@
 
                 <TextView
                     android:layout_width="wrap_content"
+                    android:id="@+id/Total_credit"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
                     android:text="" />
@@ -113,10 +110,6 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layoutDirection="locale">
             <TableLayout
                 android:id="@+id/course_table_layout"
                 android:layout_width="match_parent"
@@ -125,41 +118,41 @@
                 android:paddingBottom="16dp">
 
                 <TableRow>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:padding="8dp"
-                        android:text="Select"
-                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:text="Course Code"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Course Title"
+                        android:text="#"
                         android:textStyle="bold"
                         android:padding="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Course Code"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                        android:padding="8dp" />
+
+                    <TextView
+                        android:layout_width="142dp"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="Course Title"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Credit"
+                        android:textSize="18dp"
                         android:textStyle="bold"
                         android:padding="8dp" />
 
                 </TableRow>
 
-                <!-- You will add course rows dynamically here in your Java code -->
-
             </TableLayout>
-
-        </HorizontalScrollView>
 
     </LinearLayout>
 </ScrollView>

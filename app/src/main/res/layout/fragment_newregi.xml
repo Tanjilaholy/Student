@@ -25,7 +25,6 @@
             android:paddingBottom="16dp"
             android:stretchColumns="1">
 
-            <!-- Header row -->
             <TableRow>
                 <TextView
                     android:layout_width="wrap_content"
@@ -96,7 +95,6 @@
                     android:padding="8dp" />
             </TableRow>
 
-            <!-- Course rows will be added dynamically here -->
 
         </TableLayout>
 

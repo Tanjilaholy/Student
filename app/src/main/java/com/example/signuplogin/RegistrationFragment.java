@@ -1,6 +1,7 @@
 package com.example.signuplogin;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,7 +19,10 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,17 +35,26 @@ import java.util.Map;
 
 public class RegistrationFragment extends Fragment {
     private Button btnNewRegistration, btnAllRegistration;
-    private TableLayout course_table_layout;
+    private TableLayout courseTableLayout;
+    private TextView semesterNameTextView, semesterNoTextView, totalCreditTextView;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_registration, container, false);
+
+
         btnNewRegistration = view.findViewById(R.id.btn_new_registration);
         btnAllRegistration = view.findViewById(R.id.btn_all_registration);
-        course_table_layout = view.findViewById(R.id.course_table_layout); // TableLayout for registered courses
-        // Load registered courses from Firebase and display in the table
+        courseTableLayout = view.findViewById(R.id.course_table_layout);
+
+        semesterNameTextView = view.findViewById(R.id.S_N);
+        semesterNoTextView = view.findViewById(R.id.S_no);
+        totalCreditTextView = view.findViewById(R.id.Total_credit);
+
         fetchRegisteredCoursesFromDatabase();
-        // Handle new registration button click
+        fetchSemesterInfo();
+
         btnNewRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,11 +62,11 @@ public class RegistrationFragment extends Fragment {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_container, newRegistrationFragment);
-                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.addToBackStack(null); // Allow navigation back
                 fragmentTransaction.commit();
             }
         });
-        // Handle all registration button click
+
         btnAllRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,42 +74,97 @@ public class RegistrationFragment extends Fragment {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_container, allRegistrationFragment);
-                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.addToBackStack(null); // Allow navigation back
                 fragmentTransaction.commit();
             }
         });
+
         return view;
     }
+
     private void fetchRegisteredCoursesFromDatabase() {
-        // Fetch registered courses from Firebase (or any other source)
-        DatabaseReference registeredCoursesRef = FirebaseDatabase.getInstance().getReference("registered_courses").child("user_id"); // Use user's unique id
-        registeredCoursesRef.addValueEventListener(new ValueEventListener() {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
+            DatabaseReference registeredCoursesRef = FirebaseDatabase.getInstance().getReference("UserRegistrations").child(userId).child("selectedCourses");
+
+            registeredCoursesRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    courseTableLayout.removeAllViews();
+
+                    TableRow headerRow = new TableRow(getContext());
+                    headerRow.addView(createHeaderTextView("#"));
+                    headerRow.addView(createHeaderTextView("Course Code"));
+                    headerRow.addView(createHeaderTextView("Course Title"));
+                    headerRow.addView(createHeaderTextView("Credit"));
+                    courseTableLayout.addView(headerRow);
+
+                    int index = 1;
+                    for (DataSnapshot courseSnapshot : snapshot.getChildren()) {
+                        String courseCode = courseSnapshot.child("courseCode").getValue(String.class);
+                        String courseTitle = courseSnapshot.child("courseTitle").getValue(String.class);
+                        String credit = courseSnapshot.child("credit").getValue(String.class);
+
+                        TableRow tableRow = new TableRow(getContext());
+                        tableRow.addView(createTextView(String.valueOf(index++)));
+                        tableRow.addView(createTextView(courseCode));
+                        tableRow.addView(createTextView(courseTitle));
+                        tableRow.addView(createTextView(credit));
+                        courseTableLayout.addView(tableRow);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(getContext(), "Error loading courses!", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Toast.makeText(getContext(), "User not logged in!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void fetchSemesterInfo() {
+        DatabaseReference semesterInfoRef = FirebaseDatabase.getInstance().getReference("SemesterInfo");
+
+        semesterInfoRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                course_table_layout.removeAllViews(); // Clear previous rows
-                for (DataSnapshot courseSnapshot : snapshot.getChildren()) {
-                    Map<String, Object> courseData = (Map<String, Object>) courseSnapshot.getValue();
-                    // Dynamically add rows to the table for each registered course
-                    TableRow tableRow = new TableRow(getContext());
-                    // Add Course Code
-                    TextView courseCodeTextView = new TextView(getContext());
-                    courseCodeTextView.setText(courseData.get("courseCode").toString());
-                    tableRow.addView(courseCodeTextView);
-                    // Add Course Title
-                    TextView courseTitleTextView = new TextView(getContext());
-                    courseTitleTextView.setText(courseData.get("courseTitle").toString());
-                    tableRow.addView(courseTitleTextView);
-                    // Add Credit
-                    TextView courseCreditTextView = new TextView(getContext());
-                    courseCreditTextView.setText(courseData.get("credit").toString());
-                    tableRow.addView(courseCreditTextView);
-                     course_table_layout.addView(tableRow);
+                String semesterName = snapshot.child("semesterName").getValue(String.class);
+                String semesterNumber = snapshot.child("semesterNumber").getValue(String.class);
+                String totalCredits = snapshot.child("totalCredits").getValue(String.class);
+
+                if (semesterName != null && semesterNumber != null && totalCredits != null) {
+                    semesterNameTextView.setText(semesterName);
+                    semesterNoTextView.setText(semesterNumber);
+                    totalCreditTextView.setText(totalCredits);
+                } else {
+                    semesterNameTextView.setText("Not available");
+                    semesterNoTextView.setText("Not available");
+                    totalCreditTextView.setText("Not available");
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Handle database error
+                Toast.makeText(getContext(), "Error fetching semester information!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private TextView createHeaderTextView(String text) {
+        TextView textView = new TextView(getContext());
+        textView.setText(text);
+        textView.setTypeface(null, Typeface.BOLD);
+        textView.setPadding(16, 16, 16, 16);
+        return textView;
+    }
+
+    private TextView createTextView(String text) {
+        TextView textView = new TextView(getContext());
+        textView.setText(text);
+        textView.setPadding(16, 16, 16, 16);
+        return textView;
     }
 }

@@ -2,13 +2,17 @@ package com.example.signuplogin;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -22,7 +26,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.annotations.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
@@ -31,7 +35,7 @@ import java.util.Map;
 public class NewregiFragment extends Fragment {
     private TableLayout courseTableLayout;
     private Button submitButton;
-    private List<String> selectedCourses = new ArrayList<>();
+    private List<Map<String, String>> selectedCourses = new ArrayList<>();
     private DatabaseReference coursesRef;
     @Nullable
     @Override
@@ -55,37 +59,29 @@ public class NewregiFragment extends Fragment {
         TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
         headerRow.setLayoutParams(params);
         // Create the headers
-        TextView snHeader = new TextView(getActivity());
-        snHeader.setText("#");
-        snHeader.setGravity(Gravity.CENTER);
-        snHeader.setPadding(8, 8, 8, 8);
-        snHeader.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.3f));
-        TextView courseCodeHeader = new TextView(getActivity());
-        courseCodeHeader.setText("Course Code");
-        courseCodeHeader.setGravity(Gravity.CENTER);
-        courseCodeHeader.setPadding(8, 8, 8, 8);
-        courseCodeHeader.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1.5f));
-        TextView courseTitleHeader = new TextView(getActivity());
-        courseTitleHeader.setText("Course Title");
-        courseTitleHeader.setGravity(Gravity.CENTER);
-        courseTitleHeader.setPadding(8, 8, 8, 8);
-        courseTitleHeader.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 2f));
-        TextView creditHeader = new TextView(getActivity());
-        creditHeader.setText("Credit");
-        creditHeader.setGravity(Gravity.CENTER);  // Center the text
-        creditHeader.setPadding(8, 8, 8, 8);
-        creditHeader.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
-        TextView selectHeader = new TextView(getActivity());
-        selectHeader.setText("Select");
-        selectHeader.setGravity(Gravity.CENTER);  // Center the text
-        selectHeader.setPadding(8, 8, 8, 8);
-        selectHeader.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+        TextView snHeader = createHeaderTextView("#", 0.3f);
+        TextView courseCodeHeader = createHeaderTextView("Course Code", 1.5f);
+        TextView courseTitleHeader = createHeaderTextView("Course Title", 2f);
+        TextView creditHeader = createHeaderTextView("Credit", 1f);
+        TextView selectHeader = createHeaderTextView("Select", 1f);
+        // Add the headers to the header row
         headerRow.addView(snHeader);
         headerRow.addView(courseCodeHeader);
         headerRow.addView(courseTitleHeader);
         headerRow.addView(creditHeader);
         headerRow.addView(selectHeader);
+        // Add the header row to the table layout
         courseTableLayout.addView(headerRow);
+    }
+    private TextView createHeaderTextView(String text, float weight) {
+        TextView textView = new TextView(getActivity());
+        textView.setText(text);
+        textView.setGravity(Gravity.CENTER);
+        textView.setPadding(8, 8, 8, 8);
+        textView.setSingleLine(true); // Set single line
+        textView.setEllipsize(TextUtils.TruncateAt.END); // Ellipsize at the end
+        textView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, weight)); // Set weight
+        return textView;
     }
     private void fetchCoursesFromFirebase() {
         coursesRef.addValueEventListener(new ValueEventListener() {
@@ -103,6 +99,8 @@ public class NewregiFragment extends Fragment {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle errors appropriately
+                Toast.makeText(getActivity(), "Failed to load courses.", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -110,36 +108,43 @@ public class NewregiFragment extends Fragment {
         TableRow courseRow = new TableRow(getActivity());
         TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
         courseRow.setLayoutParams(params);
-
-        TextView snView = new TextView(getActivity());
-        snView.setText(String.valueOf(serialNumber));
-        snView.setGravity(Gravity.CENTER);
-        snView.setPadding(6, 6, 6, 6);
-        snView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.5f));
-        TextView courseCodeView = new TextView(getActivity());
-        courseCodeView.setText(courseCode);
-        courseCodeView.setGravity(Gravity.CENTER);
-        courseCodeView.setPadding(6, 6, 6, 6);
-        courseCodeView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
-        TextView courseTitleView = new TextView(getActivity());
-        courseTitleView.setText(courseTitle);
-        courseTitleView.setGravity(Gravity.CENTER);
-        courseTitleView.setPadding(6, 6, 6, 6);
-        courseTitleView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 2f));
-        TextView creditView = new TextView(getActivity());
-        creditView.setText(credit);
-        creditView.setGravity(Gravity.CENTER);
-        creditView.setPadding(6, 6, 6, 6);
-        creditView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+        TextView snView = createTextView(String.valueOf(serialNumber), 0.3f);
+        TextView courseCodeView = createTextView(courseCode, 1.5f);
+        TextView courseTitleView = createTextView(courseTitle, 2f);
+        TextView creditView = createTextView(credit, 1f);
+        // Checkbox to select the course with OnCheckedChangeListener
         CheckBox checkBox = new CheckBox(getActivity());
         checkBox.setTag(courseCode);
-        checkBox.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.5f));
+        checkBox.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Map<String, String> courseData = new HashMap<>();
+                    courseData.put("courseCode", courseCode);
+                    courseData.put("courseTitle", courseTitle);
+                    courseData.put("credit", credit);
+                    selectedCourses.add(courseData);
+                } else {
+                    // Remove the course from selectedCourses if unchecked
+                    selectedCourses.removeIf(course -> course.get("courseCode").equals(courseCode));
+                }
+            }
+        });
         courseRow.addView(snView);
         courseRow.addView(courseCodeView);
         courseRow.addView(courseTitleView);
         courseRow.addView(creditView);
         courseRow.addView(checkBox);
         courseTableLayout.addView(courseRow);
+    }
+    private TextView createTextView(String text, float weight) {
+        TextView textView = new TextView(getActivity());
+        textView.setText(text);
+        textView.setGravity(Gravity.CENTER);
+        textView.setPadding(6, 6, 6, 6);
+        textView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, weight));
+        return textView;
     }
     private void submitSelectedCourses() {
         if (selectedCourses.isEmpty()) {
@@ -150,16 +155,17 @@ public class NewregiFragment extends Fragment {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Map<String, Object> registrationData = new HashMap<>();
         registrationData.put("selectedCourses", selectedCourses);
-        registrationRef.child(userId).setValue(registrationData).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(getActivity(), "Courses successfully registered!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getActivity(), "Course registration failed", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        registrationRef.child(userId).setValue(registrationData)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getActivity(), "Courses successfully registered!", Toast.LENGTH_SHORT).show();
+                            selectedCourses.clear(); // Clear selected courses after successful submission
+                        } else {
+                            Toast.makeText(getActivity(), "Course registration failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 }
-
