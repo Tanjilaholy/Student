@@ -1,18 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".shareFragment">
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
+    <Spinner
+        android:id="@+id/semesterSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
+
+    <EditText
+        android:id="@+id/courseCodeInput"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Course Code" />
+
+    <EditText
+        android:id="@+id/courseTitleInput"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Course Title"/>
+
+    <EditText
+        android:id="@+id/gradeInput"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Grade"/>
+
+    <EditText
+        android:id="@+id/gradePointInput"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Grade Point"/>
+
+    <Button
+        android:id="@+id/addButton"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Share Fragment"
-        android:textSize="30sp"
-        android:layout_centerInParent="true"
-        android:textColor="@color/dark"/>
+        android:text="Add Result" />
 
-</RelativeLayout>
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit Result" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TableLayout
+            android:id="@+id/resultTable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*">
+
+            <TableRow>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Course Code"
+                    android:padding="8dp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Course Title"
+                    android:padding="8dp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="8dp"
+                    android:text="Grade" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Grade Point"
+                    android:padding="8dp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="8dp"
+                    android:text="Actions" />
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+</LinearLayout>

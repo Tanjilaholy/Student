@@ -1,6 +1,7 @@
 package com.example.signuplogin;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
@@ -12,6 +13,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
 
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +44,6 @@ public class RegistrationFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_registration, container, false);
-
 
         btnNewRegistration = view.findViewById(R.id.btn_new_registration);
         btnAllRegistration = view.findViewById(R.id.btn_all_registration);
@@ -94,11 +95,12 @@ public class RegistrationFragment extends Fragment {
                     courseTableLayout.removeAllViews();
 
                     TableRow headerRow = new TableRow(getContext());
-                    headerRow.addView(createHeaderTextView("#"));
-                    headerRow.addView(createHeaderTextView("Course Code"));
-                    headerRow.addView(createHeaderTextView("Course Title"));
-                    headerRow.addView(createHeaderTextView("Credit"));
+                    headerRow.addView(createHeaderTextView("#", 20, Color.parseColor("#004E9E"))); // Changed color
+                    headerRow.addView(createHeaderTextView("Course Code", 20, Color.parseColor("#004E9E"))); // Changed color
+                    headerRow.addView(createHeaderTextView("Course Title", 20, Color.parseColor("#004E9E"))); // Changed color
+                    headerRow.addView(createHeaderTextView("Credit", 20, Color.parseColor("#004E9E"))); // Changed color
                     courseTableLayout.addView(headerRow);
+
 
                     int index = 1;
                     for (DataSnapshot courseSnapshot : snapshot.getChildren()) {
@@ -107,10 +109,10 @@ public class RegistrationFragment extends Fragment {
                         String credit = courseSnapshot.child("credit").getValue(String.class);
 
                         TableRow tableRow = new TableRow(getContext());
-                        tableRow.addView(createTextView(String.valueOf(index++)));
-                        tableRow.addView(createTextView(courseCode));
-                        tableRow.addView(createTextView(courseTitle));
-                        tableRow.addView(createTextView(credit));
+                        tableRow.addView(createTextView(String.valueOf(index++), 18, Color.BLACK));
+                        tableRow.addView(createTextView(courseCode, 18, Color.BLACK));
+                        tableRow.addView(createTextView(courseTitle, 18, Color.BLACK));
+                        tableRow.addView(createTextView(credit, 18, Color.BLACK));
                         courseTableLayout.addView(tableRow);
                     }
                 }
@@ -153,17 +155,22 @@ public class RegistrationFragment extends Fragment {
         });
     }
 
-    private TextView createHeaderTextView(String text) {
+    private TextView createHeaderTextView(String text, int textSize, int textColor) {
         TextView textView = new TextView(getContext());
         textView.setText(text);
         textView.setTypeface(null, Typeface.BOLD);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+        textView.setTextColor(textColor);
         textView.setPadding(16, 16, 16, 16);
         return textView;
     }
 
-    private TextView createTextView(String text) {
+    private TextView createTextView(String text, int textSize, int textColor) {
         TextView textView = new TextView(getContext());
         textView.setText(text);
+        textView.setTypeface(null, Typeface.BOLD);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+        textView.setTextColor(textColor);
         textView.setPadding(16, 16, 16, 16);
         return textView;
     }

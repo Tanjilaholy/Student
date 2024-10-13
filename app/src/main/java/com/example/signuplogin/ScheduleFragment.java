@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.support.annotation.NonNull;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +66,7 @@ public class ScheduleFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot semesterSnapshot : dataSnapshot.getChildren()) {
+                        // Declare and initialize variables here
                         String semester = semesterSnapshot.child("semesterName").getValue(String.class);
                         String regStart = semesterSnapshot.child("registrationStart").getValue(String.class);
                         String regEnd = semesterSnapshot.child("registrationEnd").getValue(String.class);
@@ -75,6 +77,18 @@ public class ScheduleFragment extends Fragment {
                         String dropLast = semesterSnapshot.child("semesterDrop").getValue(String.class);
                         String addDropStart = semesterSnapshot.child("addDrop").getValue(String.class);
                         String terFillUpStart = semesterSnapshot.child("terFillUp").getValue(String.class);
+
+                        // Set text size to 18dp
+                        semesterName.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
+                        registrationStart.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
+                        registrationEnd.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
+                        classStart.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
+                        classEnd.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
+                        midTermStart.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
+                        finalExamStart.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
+                        semesterDrop.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
+                        addDrop.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
+                        terFillUp.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
 
                         // Set values to TextViews
                         semesterName.setText(semester);
@@ -93,7 +107,7 @@ public class ScheduleFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle error
+                // Handle error, e.g., log the error or display a message to the user
             }
         });
     }

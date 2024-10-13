@@ -2,10 +2,22 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="820dp"
+    android:backgroundTint="@color/blu"
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@android:color/white">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="78dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:text="Waiver Info"
+        android:textColor="@color/dark"
+        android:background="@color/bluish"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <!-- First Row -->
     <LinearLayout
@@ -16,20 +28,20 @@
         android:paddingVertical="8dp">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_width="94dp"
+            android:layout_height="65dp"
             android:layout_weight="1"
-            android:text="Waiver Code"
-            android:textSize="16sp"
+            android:text="Waiver Code               :"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/waiverCode"
             android:layout_width="0dp"
-            android:layout_height="36dp"
+            android:layout_height="65dp"
             android:layout_weight="1"
             android:text=""
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
     </LinearLayout>
 
     <!-- Second Row -->
@@ -41,17 +53,17 @@
         android:paddingVertical="8dp">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="34dp"
+            android:layout_width="104dp"
+            android:layout_height="65dp"
             android:layout_weight="1"
-            android:text="Waiver Name"
-            android:textSize="16sp"
+            android:text="Waiver Name              :"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/waiverName"
             android:layout_width="0dp"
-            android:layout_height="34dp"
+            android:layout_height="67dp"
             android:layout_weight="1"
             android:text=""
             android:textSize="16sp" />
@@ -66,17 +78,17 @@
         android:paddingVertical="8dp">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="38dp"
+            android:layout_width="104dp"
+            android:layout_height="62dp"
             android:layout_weight="1"
-            android:text="Total Allowed Waiver"
-            android:textSize="16sp"
+            android:text="Total Allowed Waiver :"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/totalWaiver"
             android:layout_width="0dp"
-            android:layout_height="36dp"
+            android:layout_height="67dp"
             android:layout_weight="1"
             android:text=""
             android:textSize="16sp" />
@@ -91,17 +103,17 @@
         android:paddingVertical="8dp">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_width="116dp"
+            android:layout_height="65dp"
             android:layout_weight="1"
-            android:text="Is Active"
-            android:textSize="16sp"
+            android:text="Is Active                      :"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/isActive"
             android:layout_width="0dp"
-            android:layout_height="38dp"
+            android:layout_height="69dp"
             android:layout_weight="1"
             android:text=""
             android:textSize="16sp" />

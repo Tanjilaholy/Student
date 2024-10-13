@@ -1,6 +1,7 @@
 package com.example.signuplogin;
 
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,14 @@ public class WaiverFragment extends Fragment {
                     String waiverName = waiverSnapshot.child("waiverName").getValue(String.class);
                     String totalWaiver = waiverSnapshot.child("totalWaiver").getValue(String.class);
                     boolean isActive = waiverSnapshot.child("isActive").getValue(Boolean.class);
+
+                    // Set text size to 20sp
+                    waiverCodeTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                    waiverNameTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                    totalWaiverTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                    isActiveTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+
+                    // Set text values
                     waiverCodeTextView.setText(waiverCode);
                     waiverNameTextView.setText(waiverName);
                     totalWaiverTextView.setText(totalWaiver);
@@ -53,6 +62,7 @@ public class WaiverFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle errors here, e.g., log the error or display a message to the user
             }
         });
     }

@@ -12,6 +12,7 @@ firebaseAuth = "23.0.0"
 volley = "1.2.1"
 firebaseDatabase = "21.0.0"
 navigationRuntime = "2.8.1"
+rendering = "1.17.1"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -25,6 +26,7 @@ firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version
 volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
 navigation-runtime = { group = "androidx.navigation", name = "navigation-runtime", version.ref = "navigationRuntime" }
+rendering = { group = "com.google.ar.sceneform", name = "rendering", version.ref = "rendering" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
