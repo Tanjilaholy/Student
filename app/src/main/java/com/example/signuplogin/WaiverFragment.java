@@ -62,7 +62,6 @@ public class WaiverFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle errors here, e.g., log the error or display a message to the user
             }
         });
     }

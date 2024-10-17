@@ -50,12 +50,12 @@ public class AllregiFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     allRegiTableLayout.removeAllViews();
 
-
+                    // Create the header row
                     TableRow headerRow = new TableRow(getContext());
-                    headerRow.addView(createHeaderTextView("#"));
-                    headerRow.addView(createHeaderTextView("Course Code"));
-                    headerRow.addView(createHeaderTextView("Course Title"));
-                    headerRow.addView(createHeaderTextView("Credit"));
+                    headerRow.addView(createHeaderTextView("#", 0.5f));
+                    headerRow.addView(createHeaderTextView("Course Code", 1f));
+                    headerRow.addView(createHeaderTextView("Course Title", 2f));
+                    headerRow.addView(createHeaderTextView("Credit", 1f));
                     allRegiTableLayout.addView(headerRow);
 
                     int index = 1;
@@ -65,10 +65,10 @@ public class AllregiFragment extends Fragment {
                         String credit = courseSnapshot.child("credit").getValue(String.class);
 
                         TableRow tableRow = new TableRow(getContext());
-                        tableRow.addView(createTextView(String.valueOf(index++)));
-                        tableRow.addView(createTextView(courseCode));
-                        tableRow.addView(createTextView(courseTitle));
-                        tableRow.addView(createTextView(credit));
+                        tableRow.addView(createTextView(String.valueOf(index++), 0.5f));
+                        tableRow.addView(createTextView(courseCode, 1f));
+                        tableRow.addView(createTextView(courseTitle, 2f));
+                        tableRow.addView(createTextView(credit, 1f));
                         allRegiTableLayout.addView(tableRow);
                     }
                 }
@@ -83,18 +83,23 @@ public class AllregiFragment extends Fragment {
         }
     }
 
-    private TextView createHeaderTextView(String text) {
+    private TextView createHeaderTextView(String text, float weight) {
         TextView textView = new TextView(getContext());
         textView.setText(text);
         textView.setTypeface(null, Typeface.BOLD);
+        textView.setTextSize(18);
         textView.setPadding(16, 16, 16, 16);
+        textView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, weight));
         return textView;
     }
 
-    private TextView createTextView(String text) {
+    private TextView createTextView(String text, float weight) {
         TextView textView = new TextView(getContext());
         textView.setText(text);
+        textView.setTextSize(16);
+        textView.setTypeface(null, Typeface.NORMAL);
         textView.setPadding(16, 16, 16, 16);
+        textView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, weight));
         return textView;
     }
 }

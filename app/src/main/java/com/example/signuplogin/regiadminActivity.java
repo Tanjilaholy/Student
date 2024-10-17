@@ -11,6 +11,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -35,6 +36,7 @@ public class regiadminActivity<Map> extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_regiadmin);
         databaseReference = FirebaseDatabase.getInstance().getReference();
         semesterName = findViewById(R.id.semester_name);
@@ -111,9 +113,9 @@ public class regiadminActivity<Map> extends AppCompatActivity {
                         }
                     });
         }
-        offeredCourses.clear(); // Clear the course list after submission
-        courseTableLayout.removeViews(1, courseCounter - 1); // Clear the table rows
-        courseCounter = 1; // Reset the counter
+        offeredCourses.clear();
+        courseTableLayout.removeViews(1, courseCounter - 1);
+        courseCounter = 1;
     }
     private void updateSemesterInfo() {
         String name = semesterName.getText().toString();

@@ -7,7 +7,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <!-- Title Section -->
         <TextView
             android:id="@+id/about_title"
             android:layout_width="wrap_content"
@@ -18,7 +17,6 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:paddingBottom="16dp"/>
-        <!-- Image Section -->
         <ImageView
             android:id="@+id/about_image"
             android:layout_width="match_parent"
@@ -26,16 +24,15 @@
             android:src="@drawable/campus"
             android:scaleType="centerCrop"
             android:layout_marginBottom="16dp"/>
-        <!-- Description Section -->
         <TextView
             android:id="@+id/about_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="italic"
             android:text="Our institution is committed to providing the best educational environment for students. We focus on holistic development and excellence in academics."
-            android:textSize="18dp"
+            android:textSize="16dp"
             android:lineSpacingExtra="6dp"
             android:paddingBottom="16dp"/>
-        <!-- Mission Section -->
         <TextView
             android:id="@+id/about_mission_title"
             android:layout_width="wrap_content"
@@ -44,15 +41,16 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:paddingBottom="8dp"/>
+
         <TextView
             android:id="@+id/about_mission_description"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Our mission is to create future leaders through high-quality education and development programs."
-            android:textSize="20sp"
+            android:layout_height="80dp"
             android:lineSpacingExtra="6dp"
-            android:paddingBottom="16dp"/>
-        <!-- Contact Information Section -->
+            android:paddingBottom="17dp"
+            android:textStyle="italic"
+            android:text="Our mission is to create future leaders through high-quality education and development programs."
+            android:textSize="16sp" />
         <TextView
             android:id="@+id/about_contact_title"
             android:layout_width="wrap_content"
@@ -61,12 +59,14 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:paddingBottom="8dp"/>
+
         <TextView
             android:id="@+id/about_contact_details"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="109dp"
+            android:lineSpacingExtra="6dp"
             android:text="Email: info@institution.com\nTelephone: +88 02 -9821493-7, 9898521\nAddress:Ashkona (Near Haji Camp), Dhaka"
-            android:textSize="20sp"
-            android:lineSpacingExtra="6dp"/>
+            android:textSize="17sp"
+            android:textStyle="italic" />
     </LinearLayout>
 </ScrollView>

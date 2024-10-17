@@ -26,9 +26,8 @@ public class AcademicFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_academic, container, false); // Replace with your layout file
-
-        calenderImageView = view.findViewById(R.id.calenderimageview); // Replace with your ImageView ID
+        View view = inflater.inflate(R.layout.fragment_academic, container, false);
+        calenderImageView = view.findViewById(R.id.calenderimageview);
 
         DatabaseReference calenderRef = FirebaseDatabase.getInstance().getReference().child("calender");
 
@@ -37,12 +36,11 @@ public class AcademicFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     for (DataSnapshot calenderSnapshot : snapshot.getChildren()) {
-                        // Assuming your calender data has a field named "image" for the image URL
                         String imageUrl = calenderSnapshot.child("image").getValue(String.class);
 
                         if (imageUrl != null) {
                             Picasso.get().load(imageUrl).into(calenderImageView);
-                            // Image loaded successfully, you can break the loop if you only need the first image
+
                             break;
                         }
                     }
@@ -51,7 +49,7 @@ public class AcademicFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Handle errors
+
             }
         });
 

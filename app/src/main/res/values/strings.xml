@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">Student Portal</string>
+    <style name="Base.Theme.SignupLogin." parent="Theme.Material3.DayNight.NoActionBar">
+    </style>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

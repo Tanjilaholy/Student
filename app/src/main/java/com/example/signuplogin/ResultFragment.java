@@ -2,6 +2,7 @@ package com.example.signuplogin;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,13 +37,12 @@ public class ResultFragment extends Fragment {
         semesterSpinner = view.findViewById(R.id.semesterSpinner);
         resultTable = view.findViewById(R.id.resultTable);
 
-        // Set up the semester spinner
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(requireContext(),
                 R.array.semester_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         semesterSpinner.setAdapter(adapter);
 
-        // Load results when a semester is selected
         semesterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -52,7 +52,6 @@ public class ResultFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                // Do nothing
             }
         });
 
@@ -60,49 +59,50 @@ public class ResultFragment extends Fragment {
     }
 
     private void loadResultsForSemester(String semester) {
-        // Clear existing rows (except the header)
         int childCount = resultTable.getChildCount();
         if (childCount > 1) {
             resultTable.removeViews(1, childCount - 1);
         }
 
-        // Query Firebase to get the results for the selected semester
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Results").child(semester);
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    // Fetch course data from Firebase
                     String courseCode = snapshot.child("courseCode").getValue(String.class);
                     String courseTitle = snapshot.child("courseTitle").getValue(String.class);
                     String grade = snapshot.child("grade").getValue(String.class);
                     String gradePoint = snapshot.child("gradePoint").getValue(String.class);
 
-                    // Create a new table row
                     TableRow tableRow = new TableRow(getContext());
-                    tableRow.setPadding(8, 8, 8, 8); // Add padding
+                    tableRow.setPadding(8, 8, 8, 8);
 
-                    // Create and add TextViews for courseCode, courseTitle, grade, and gradePoint
                     TextView courseCodeView = new TextView(getContext());
                     courseCodeView.setText(courseCode);
+                    courseCodeView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+                    courseCodeView.setPadding(8, 8, 8, 8);
                     tableRow.addView(courseCodeView);
 
                     TextView courseTitleView = new TextView(getContext());
                     courseTitleView.setText(courseTitle);
+                    courseTitleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+                    courseTitleView.setPadding(8, 8, 8, 8);
                     tableRow.addView(courseTitleView);
 
                     TextView gradeView = new TextView(getContext());
                     gradeView.setText(grade);
+                    gradeView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+                    gradeView.setPadding(8, 8, 8, 8);
                     tableRow.addView(gradeView);
 
                     TextView gradePointView = new TextView(getContext());
                     gradePointView.setText(gradePoint);
+                    gradePointView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+                    gradePointView.setPadding(8, 8, 8, 8);
                     tableRow.addView(gradePointView);
 
-                    // Set background color for the rows (optional)
-                    tableRow.setBackgroundColor(Color.parseColor("#FFFFFF")); // White background for rows
+                    tableRow.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
-                    // Add the row to the TableLayout
                     resultTable.addView(tableRow);
                 }
             }

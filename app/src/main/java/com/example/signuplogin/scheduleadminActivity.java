@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DatabaseReference;
@@ -25,12 +26,11 @@ public class scheduleadminActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scheduleadmin); // Assuming your layout file is activity_scheduleadmin.xml
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_scheduleadmin);
 
-        // Initialize Firebase Database
         databaseReference = FirebaseDatabase.getInstance().getReference("Semesters");
 
-        // Initialize EditTexts
         semesterNameEditText = findViewById(R.id.semesterName);
         registrationStartEditText = findViewById(R.id.registrationStart);
         registrationEndEditText = findViewById(R.id.registrationEnd);
@@ -42,10 +42,7 @@ public class scheduleadminActivity extends AppCompatActivity {
         finalExamStartEditText = findViewById(R.id.finalExamStart);
         terFillUpEditText = findViewById(R.id.terFillUp);
 
-        // Initialize Submit Button
         submitButton = findViewById(R.id.submitSemester);
-
-        // Set Click Listener for Submit Button
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,7 +51,6 @@ public class scheduleadminActivity extends AppCompatActivity {
         });
     }
 
-    // Method to Add Semester Data to Firebase Realtime Database
     private void addSemesterToDatabase() {
         String semesterName = semesterNameEditText.getText().toString();
         String registrationStart = registrationStartEditText.getText().toString();
@@ -67,7 +63,6 @@ public class scheduleadminActivity extends AppCompatActivity {
         String finalExamStart = finalExamStartEditText.getText().toString();
         String terFillUp = terFillUpEditText.getText().toString();
 
-        // Validation - Ensure Fields Are Not Empty
         if (TextUtils.isEmpty(semesterName) || TextUtils.isEmpty(registrationStart) || TextUtils.isEmpty(registrationEnd)
                 || TextUtils.isEmpty(classStart) || TextUtils.isEmpty(classEnd) || TextUtils.isEmpty(semesterDrop)
                 || TextUtils.isEmpty(addDrop) || TextUtils.isEmpty(midTermStart) || TextUtils.isEmpty(finalExamStart)
@@ -75,11 +70,9 @@ public class scheduleadminActivity extends AppCompatActivity {
             Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
             return;
         }
-
-        // Generate a unique ID for each semester entry
         String semesterId = databaseReference.push().getKey();
 
-        // Create a HashMap to store the semester details
+
         HashMap<String, String> semesterData = new HashMap<>();
         semesterData.put("semesterName", semesterName);
         semesterData.put("registrationStart", registrationStart);
@@ -90,9 +83,8 @@ public class scheduleadminActivity extends AppCompatActivity {
         semesterData.put("addDrop", addDrop);
         semesterData.put("midTermStart", midTermStart);
         semesterData.put("finalExamStart", finalExamStart);
-        semesterData.put("terFillUp", terFillUp); // Assuming "terFillUp" is the key for Final Exam End Date
+        semesterData.put("terFillUp", terFillUp);
 
-        // Store the data in the Firebase Realtime Database under the unique semesterId
         databaseReference.child(semesterId).setValue(semesterData)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -104,7 +96,6 @@ public class scheduleadminActivity extends AppCompatActivity {
                 });
     }
 
-    // Method to Clear Input Fields After Submission
     private void clearFields() {
         semesterNameEditText.setText("");
         registrationStartEditText.setText("");

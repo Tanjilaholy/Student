@@ -16,6 +16,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -41,12 +42,12 @@ public class resultadminActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_resultadmin);
 
-        // Initialize Firebase Database
         databaseReference = FirebaseDatabase.getInstance().getReference("Results");
 
-        // Initialize UI elements
+
         semesterSpinner = findViewById(R.id.semesterSpinner);
         courseCodeInput = findViewById(R.id.courseCodeInput);
         courseTitleInput = findViewById(R.id.courseTitleInput);
@@ -56,16 +57,14 @@ public class resultadminActivity extends AppCompatActivity {
         Button addButton = findViewById(R.id.addButton);
         Button submitButton = findViewById(R.id.submitButton);
 
-        // Set up the spinner
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.semester_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         semesterSpinner.setAdapter(adapter);
 
-        // Add button click listener to add a row to the table
         addButton.setOnClickListener(v -> addResultRow());
 
-        // Submit button click listener to save data to Firebase
         submitButton.setOnClickListener(v -> submitResultsToDatabase());
     }
 
@@ -80,10 +79,8 @@ public class resultadminActivity extends AppCompatActivity {
             return;
         }
 
-        // Create a new TableRow
         TableRow newRow = new TableRow(this);
 
-        // Add TextViews for each field
         TextView codeView = createTextView(courseCode);
         TextView titleView = createTextView(courseTitle);
         TextView gradeView = createTextView(grade);
@@ -91,24 +88,21 @@ public class resultadminActivity extends AppCompatActivity {
         Button deleteButton = new Button(this);
         deleteButton.setText("Delete");
 
-        // Add Delete button functionality
         deleteButton.setOnClickListener(v -> {
             resultTable.removeView(newRow);
-            // Delete from database if necessary
             deleteResultFromDatabase(courseCode);
         });
 
-        // Add views to the row
+
         newRow.addView(codeView);
         newRow.addView(titleView);
         newRow.addView(gradeView);
         newRow.addView(gradePointView);
         newRow.addView(deleteButton);
 
-        // Add the row to the table
+
         resultTable.addView(newRow);
 
-        // Clear input fields after adding the row
         clearInputs();
     }
 
@@ -134,16 +128,14 @@ public class resultadminActivity extends AppCompatActivity {
     }
 
     private void submitResultsToDatabase() {
-        for (int i = 1; i < resultTable.getChildCount(); i++) { // Start from index 1 to skip the header row
+        for (int i = 1; i < resultTable.getChildCount(); i++) {
             TableRow row = (TableRow) resultTable.getChildAt(i);
 
-            // Extract values from the row
             String courseCode = ((TextView) row.getChildAt(0)).getText().toString();
             String courseTitle = ((TextView) row.getChildAt(1)).getText().toString();
             String grade = ((TextView) row.getChildAt(2)).getText().toString();
             String gradePoint = ((TextView) row.getChildAt(3)).getText().toString();
 
-            // Save data to Firebase using a Map
             saveResultToDatabase(courseCode, courseTitle, grade, gradePoint);
         }
         Toast.makeText(this, "Results submitted", Toast.LENGTH_SHORT).show();
@@ -152,7 +144,6 @@ public class resultadminActivity extends AppCompatActivity {
     private void saveResultToDatabase(String courseCode, String courseTitle, String grade, String gradePoint) {
         String semester = semesterSpinner.getSelectedItem().toString();
 
-        // Using a Map to store values directly without creating a class
         Map<String, Object> resultData = new HashMap<>();
         resultData.put("courseCode", courseCode);
         resultData.put("courseTitle", courseTitle);

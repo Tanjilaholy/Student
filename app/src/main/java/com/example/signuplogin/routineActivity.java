@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -38,6 +40,7 @@ public class routineActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_routine);
 
         sectionSpinner = findViewById(R.id.sectionSpinner);
@@ -103,13 +106,12 @@ public class routineActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle database error
+
             }
         });
     }
 
     private void uploadRoutine(String section) {
-        // This method might not be needed anymore as image upload is handled in onActivityResult
     }
 
     private void deleteRoutineImage(String section) {
@@ -118,7 +120,6 @@ public class routineActivity extends AppCompatActivity {
             databaseReference.child(section).child("routine").removeValue();
             selectedImageView.setImageResource(R.drawable.figma1);
         }).addOnFailureListener(e -> {
-            // Handle deletion failure
         });
     }
 

@@ -32,7 +32,6 @@
                     android:padding="8dp" />
             </TableRow>
 
-            <!-- Other TableRows for dates (same as before) -->
         </TableLayout>
 
 
@@ -41,7 +40,6 @@
             android:layout_height="wrap_content"
             android:stretchColumns="1">
 
-            <!-- Registration Start Date -->
             <TableRow>
                 <TextView
                     android:layout_width="wrap_content"
@@ -60,7 +58,6 @@
                     android:padding="8dp" />
             </TableRow>
 
-            <!-- Registration End Date -->
             <TableRow>
                 <TextView
                     android:layout_width="wrap_content"
@@ -78,7 +75,6 @@
                     android:padding="8dp" />
             </TableRow>
 
-            <!-- Class Start Date -->
             <TableRow>
                 <TextView
                     android:layout_width="wrap_content"
@@ -96,7 +92,6 @@
                     android:padding="8dp" />
             </TableRow>
 
-            <!-- Class End Date -->
             <TableRow>
                 <TextView
                     android:layout_width="wrap_content"
@@ -114,7 +109,6 @@
                     android:padding="8dp" />
             </TableRow>
 
-            <!-- Semester Drop Last Date -->
             <TableRow>
                 <TextView
                     android:layout_width="wrap_content"
@@ -132,7 +126,6 @@
                     android:padding="8dp" />
             </TableRow>
 
-            <!-- Add Drop Date -->
             <TableRow>
                 <TextView
                     android:layout_width="wrap_content"
@@ -168,7 +161,6 @@
                     android:padding="8dp" />
             </TableRow>
 
-            <!-- Final Exam Start Date -->
             <TableRow>
                 <TextView
                     android:layout_width="wrap_content"
@@ -186,7 +178,7 @@
                     android:padding="8dp" />
             </TableRow>
 
-            <!-- Ter Fill Up Start Date -->
+
             <TableRow>
                 <TextView
                     android:layout_width="wrap_content"
@@ -206,7 +198,7 @@
 
         </TableLayout>
 
-        <!-- Submit Button -->
+
         <Button
             android:id="@+id/submitSemester"
             android:layout_width="match_parent"

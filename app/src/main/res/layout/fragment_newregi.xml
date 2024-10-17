@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     android:padding="16dp">
 
     <LinearLayout
@@ -14,97 +15,128 @@
             android:layout_height="wrap_content"
             android:text="Course Registration: Offered Courses"
             android:textStyle="bold"
-            android:textSize="18sp"
-            android:paddingBottom="8dp" />
-
+            android:textColor="@color/primary_dark"
+            android:textSize="20sp"
+            android:paddingBottom="12dp" />
 
         <TableLayout
             android:id="@+id/course_table_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="16dp"
-            android:stretchColumns="1">
+            android:background="@color/white"
+            android:padding="12dp"
+            android:stretchColumns="1"
+            android:elevation="4dp"
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="1dp">
 
-            <TableRow>
+            <TableRow
+                android:background="@color/primary"
+                android:paddingVertical="8dp">
+
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="#"
+                    android:text="*"
                     android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:layout_weight="0.5"
                     android:padding="8dp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
                     android:padding="8dp"
-                    android:text="Course Code"
+                    android:text="Course \nCode"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="51dp"
+                    android:layout_weight="2.5"
+                    android:padding="8dp"
+                    android:text="      Course Title"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="51dp"
+                    android:layout_weight="1.0"
+                    android:padding="8dp"
+                    android:text="Credit"
+                    android:textColor="@color/white"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Course Title"
-                    android:textStyle="bold"
-                    android:padding="8dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Credit"
-                    android:textStyle="bold"
-                    android:padding="8dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="51dp"
+                    android:padding="8dp"
                     android:text="Select"
-                    android:textStyle="bold"
-                    android:padding="8dp" />
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
             </TableRow>
 
-            <TableRow>
+            <TableRow
+                android:background="@color/row_background"
+                android:paddingVertical="8dp">
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="51dp"
+                    android:layout_weight="0.5"
+                    android:padding="8dp"
                     android:text="1"
+                    android:textColor="@color/text_primary" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="51dp"
+                    android:layout_weight="1.0"
+                    android:padding="8dp"
+                    android:text="CS101"
+                    android:textColor="@color/text_primary" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Introduction to Computer Science"
+                    android:textColor="@color/text_primary"
+                    android:layout_weight="2.5"
                     android:padding="8dp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:gravity="center"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:padding="8dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text=""
-                    android:padding="8dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:padding="8dp" />
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_weight="1.0"
+                    android:padding="8dp"
+                    android:text="3.0"
+                    android:textColor="@color/text_primary" />
 
                 <CheckBox
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="58dp"
                     android:padding="8dp" />
             </TableRow>
 
-
         </TableLayout>
+
 
         <Button
             android:id="@+id/btn_submit_registration"
             android:layout_width="wrap_content"
-            android:backgroundTint="@color/dark"
             android:layout_height="wrap_content"
             android:text="Submit"
-            android:layout_gravity="end" />
+            android:backgroundTint="@color/primary"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp"
+            android:layout_gravity="end"
+            android:elevation="4dp" />
 
     </LinearLayout>
 

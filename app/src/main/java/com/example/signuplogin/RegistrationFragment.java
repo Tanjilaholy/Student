@@ -95,12 +95,18 @@ public class RegistrationFragment extends Fragment {
                     courseTableLayout.removeAllViews();
 
                     TableRow headerRow = new TableRow(getContext());
-                    headerRow.addView(createHeaderTextView("#", 20, Color.parseColor("#004E9E"))); // Changed color
-                    headerRow.addView(createHeaderTextView("Course Code", 20, Color.parseColor("#004E9E"))); // Changed color
-                    headerRow.addView(createHeaderTextView("Course Title", 20, Color.parseColor("#004E9E"))); // Changed color
-                    headerRow.addView(createHeaderTextView("Credit", 20, Color.parseColor("#004E9E"))); // Changed color
-                    courseTableLayout.addView(headerRow);
 
+                    // Define layout params for header
+                    TableRow.LayoutParams paramsHeaderIndex = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.3f);
+                    TableRow.LayoutParams paramsHeaderCourseCode = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1.0f);
+                    TableRow.LayoutParams paramsHeaderCourseTitle = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 2.0f);
+                    TableRow.LayoutParams paramsHeaderCredit = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1.0f);
+
+                    headerRow.addView(createHeaderTextView("#", 16, Color.parseColor("#004E9E"), paramsHeaderIndex));
+                    headerRow.addView(createHeaderTextView("Course Code", 16, Color.parseColor("#004E9E"), paramsHeaderCourseCode));
+                    headerRow.addView(createHeaderTextView("Course Title", 18, Color.parseColor("#004E9E"), paramsHeaderCourseTitle));
+                    headerRow.addView(createHeaderTextView("Credit", 16, Color.parseColor("#004E9E"), paramsHeaderCredit));
+                    courseTableLayout.addView(headerRow);
 
                     int index = 1;
                     for (DataSnapshot courseSnapshot : snapshot.getChildren()) {
@@ -109,10 +115,17 @@ public class RegistrationFragment extends Fragment {
                         String credit = courseSnapshot.child("credit").getValue(String.class);
 
                         TableRow tableRow = new TableRow(getContext());
-                        tableRow.addView(createTextView(String.valueOf(index++), 18, Color.BLACK));
-                        tableRow.addView(createTextView(courseCode, 18, Color.BLACK));
-                        tableRow.addView(createTextView(courseTitle, 18, Color.BLACK));
-                        tableRow.addView(createTextView(credit, 18, Color.BLACK));
+
+
+                        TableRow.LayoutParams paramsIndex = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.3f);
+                        TableRow.LayoutParams paramsCourseCode = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1.0f);
+                        TableRow.LayoutParams paramsCourseTitle = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 2.0f);
+                        TableRow.LayoutParams paramsCredit = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1.0f);
+
+                        tableRow.addView(createTextView(String.valueOf(index++), 16, Color.BLACK, paramsIndex));
+                        tableRow.addView(createTextView(courseCode, 16, Color.BLACK, paramsCourseCode));
+                        tableRow.addView(createTextView(courseTitle, 18, Color.BLACK, paramsCourseTitle));
+                        tableRow.addView(createTextView(credit, 16, Color.BLACK, paramsCredit));
                         courseTableLayout.addView(tableRow);
                     }
                 }
@@ -141,6 +154,19 @@ public class RegistrationFragment extends Fragment {
                     semesterNameTextView.setText(semesterName);
                     semesterNoTextView.setText(semesterNumber);
                     totalCreditTextView.setText(totalCredits);
+
+
+                    int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
+
+                    if (semesterName != null) {
+                        semesterNameTextView.setTypeface(semesterNameTextView.getTypeface(), Typeface.BOLD);
+                        semesterNameTextView.setPadding(padding, padding, padding, padding);
+                    }
+
+                    semesterNoTextView.setTypeface(semesterNoTextView.getTypeface(), Typeface.BOLD);
+                    totalCreditTextView.setTypeface(totalCreditTextView.getTypeface(), Typeface.BOLD);
+                    semesterNoTextView.setPadding(padding, padding, padding, padding);
+                    totalCreditTextView.setPadding(padding, padding, padding, padding);
                 } else {
                     semesterNameTextView.setText("Not available");
                     semesterNoTextView.setText("Not available");
@@ -155,23 +181,25 @@ public class RegistrationFragment extends Fragment {
         });
     }
 
-    private TextView createHeaderTextView(String text, int textSize, int textColor) {
+    private TextView createHeaderTextView(String text, int textSize, int textColor, TableRow.LayoutParams layoutParams) {
         TextView textView = new TextView(getContext());
         textView.setText(text);
         textView.setTypeface(null, Typeface.BOLD);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
         textView.setTextColor(textColor);
         textView.setPadding(16, 16, 16, 16);
+        textView.setLayoutParams(layoutParams);
         return textView;
     }
 
-    private TextView createTextView(String text, int textSize, int textColor) {
+    private TextView createTextView(String text, int textSize, int textColor, TableRow.LayoutParams layoutParams) {
         TextView textView = new TextView(getContext());
         textView.setText(text);
-        textView.setTypeface(null, Typeface.BOLD);
+        textView.setTypeface(null, Typeface.NORMAL);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
         textView.setTextColor(textColor);
         textView.setPadding(16, 16, 16, 16);
+        textView.setLayoutParams(layoutParams);
         return textView;
     }
 }

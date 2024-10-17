@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/blu">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="970dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="20dp">
 
@@ -12,176 +14,189 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:stretchColumns="1">
-            <!-- Semester Name -->
-            <TableRow>
+
+            <TableRow
+                android:background="#E8F5E9">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
-                    android:background="@color/blu"
                     android:padding="8dp"
-                    android:text="Semester Name        :"
-                    android:textSize="25dp"
+                    android:text="Semester Name                  :"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/semesterName"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
-
-                    android:padding="16dp" />
+                    android:padding="16dp"
+                    android:textSize="24sp" />
             </TableRow>
-            <!-- Registration Start Date -->
-            <TableRow>
+
+
+            <TableRow
+                android:background="#F1F8E9">
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="51dp"
+                    android:layout_height="50dp"
                     android:padding="8dp"
                     android:text="Registration Start Date     :"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/registrationStart"
                     android:layout_width="wrap_content"
-                    android:layout_height="51dp"
-                    android:padding="8dp" />
+                    android:layout_height="50dp"
+                    android:padding="8dp"
+                    android:textSize="20sp" />
             </TableRow>
-            <!-- Registration End Date -->
-            <TableRow>
+            <TableRow
+                android:background="#E8F5E9">
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="51dp"
-                    android:textSize="20dp"
+                    android:layout_height="50dp"
                     android:padding="8dp"
                     android:text="Registration End Date       :"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/registrationEnd"
                     android:layout_width="wrap_content"
-                    android:layout_height="51dp"
-                    android:padding="8dp" />
+                    android:layout_height="50dp"
+                    android:padding="8dp"
+                    android:textSize="22sp" />
             </TableRow>
-            <!-- Class Start Date -->
-            <TableRow>
+
+            <TableRow
+                android:background="#F1F8E9">
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="51dp"
+                    android:layout_height="50dp"
                     android:padding="8dp"
-                    android:textSize="20dp"
-                    android:text="Class Start Date                  :"
+                    android:text="Class Start Date                 :"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/classStart"
                     android:layout_width="wrap_content"
-                    android:layout_height="51dp"
-                    android:padding="8dp" />
+                    android:layout_height="50dp"
+                    android:padding="8dp"
+                    android:textSize="22sp" />
             </TableRow>
-            <!-- Class End Date -->
-            <TableRow>
+
+            <TableRow
+                android:background="#E8F5E9">
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="51dp"
-                    android:textSize="20dp"
+                    android:layout_height="50dp"
                     android:padding="8dp"
-                    android:text="Class End Date                    :"
+                    android:text="Class End Date                   :"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/classEnd"
                     android:layout_width="wrap_content"
-                    android:layout_height="51dp"
-                    android:padding="8dp" />
-            </TableRow>
-            <!-- Midterm Start Date -->
-            <TableRow>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="51dp"
+                    android:layout_height="50dp"
                     android:padding="8dp"
-                    android:textSize="20dp"
-                    android:text="Mid Term Start Date          :"
+                    android:textSize="22sp" />
+            </TableRow>
+
+            <TableRow
+                android:background="#F1F8E9">
+                <TextView
+                    android:layout_width="244dp"
+                    android:layout_height="50dp"
+                    android:padding="8dp"
+                    android:text="Mid Term Start Date         :"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/midTermStart"
                     android:layout_width="wrap_content"
-                    android:layout_height="51dp"
-                    android:padding="8dp" />
+                    android:layout_height="50dp"
+                    android:padding="8dp"
+                    android:textSize="22sp" />
             </TableRow>
-            <!-- Final Exam Start Date -->
-            <TableRow>
+            <TableRow
+                android:background="#E8F5E9">
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="51dp"
+                    android:layout_height="50dp"
                     android:padding="8dp"
-                    android:textSize="20dp"
-                    android:text="Final Exam Start Date       :"
+                    android:text="Final Exam Start Date      :"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/finalExamStart"
                     android:layout_width="wrap_content"
-                    android:layout_height="51dp"
-                    android:padding="8dp" />
+                    android:layout_height="50dp"
+                    android:padding="8dp"
+                    android:textSize="22sp" />
             </TableRow>
-            <!-- Semester Drop Last Date -->
-            <TableRow>
+
+            <TableRow
+                android:background="#F1F8E9">
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="51dp"
+                    android:layout_height="50dp"
                     android:padding="8dp"
-                    android:textSize="20dp"
-                    android:text="Semester Drop Last Date :"
+                    android:text="Semester Drop Last Date:"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/semesterDrop"
                     android:layout_width="wrap_content"
-                    android:layout_height="51dp"
-                    android:padding="8dp" />
+                    android:layout_height="50dp"
+                    android:padding="8dp"
+                    android:textSize="22sp" />
             </TableRow>
-            <!-- Add Drop Start Date -->
-            <TableRow>
+
+            <TableRow
+                android:background="#E8F5E9">
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="51dp"
+                    android:layout_height="50dp"
                     android:padding="8dp"
-                    android:textSize="20dp"
-                    android:text="Add Drop Start Date         :"
+                    android:text="Add Drop Start Date          :"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/addDrop"
                     android:layout_width="wrap_content"
-                    android:layout_height="51dp"
-                    android:padding="8dp" />
+                    android:layout_height="50dp"
+                    android:padding="8dp"
+                    android:textSize="22sp" />
             </TableRow>
-            <!-- Ter Fill Up Start Date -->
-            <TableRow>
+
+            <TableRow
+                android:background="#F1F8E9">
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="51dp"
+                    android:layout_height="50dp"
                     android:padding="8dp"
-                    android:textSize="20dp"
-                    android:text="Ter Fill Up Start Date         :"
+                    android:text="Ter Fill Up Start Date        :"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/terFillUp"
                     android:layout_width="wrap_content"
-                    android:layout_height="51dp"
-                    android:padding="8dp" />
+                    android:layout_height="50dp"
+                    android:padding="8dp"
+                    android:textSize="22sp" />
             </TableRow>
+
         </TableLayout>
 
     </LinearLayout>
 </ScrollView>
-
-
-
-
-

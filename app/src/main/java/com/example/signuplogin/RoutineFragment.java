@@ -43,35 +43,26 @@ public class RoutineFragment extends Fragment {
         sectionSpinner = view.findViewById(R.id.sectionSpinner);
         selectedImageView = view.findViewById(R.id.selectedImageView);
 
-        // Initialize Firebase Storage reference
         firebaseStorage = FirebaseStorage.getInstance();
-
-        // Setup spinner with section names
         setupSectionSpinner();
 
         return view;
     }
 
     private void setupSectionSpinner() {
-        // Section names (you can get them from Firebase too if they are dynamic)
         String[] sections = {"Section A", "Section B", "Section C", "Section D", "Section E"};
 
-        // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_spinner_item, sections);
 
-        // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // Apply the adapter to the spinner
         sectionSpinner.setAdapter(adapter);
 
-        // Set an OnItemSelectedListener on the spinner
+
         sectionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedSection = parent.getItemAtPosition(position).toString();
-                // Load the image for the selected section
                 loadRoutineImage(selectedSection);
             }
 
@@ -83,19 +74,17 @@ public class RoutineFragment extends Fragment {
     }
 
     private void loadRoutineImage(String section) {
-        // Reference to Firebase Storage where the images are stored
         StorageReference storageRef = firebaseStorage.getReference().child("routines/" + section + ".jpg");
         Picasso.get().setLoggingEnabled(true);
 
-        // Get the download URL
         storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                // Load the image using Picasso
+
                 Picasso.get()
                         .load(uri)
                         .placeholder(R.drawable.placeholder) // Optional placeholder
-                        .error(R.drawable.figma2) // Optional error image
+                        .error(R.drawable.figma2)
                         .into(selectedImageView);
             }
         }).addOnFailureListener(new OnFailureListener() {

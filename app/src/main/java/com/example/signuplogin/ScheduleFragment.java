@@ -39,7 +39,6 @@ public class ScheduleFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_schedule, container, false);
 
-        // Initialize TextViews
         semesterName = view.findViewById(R.id.semesterName);
         registrationStart = view.findViewById(R.id.registrationStart);
         registrationEnd = view.findViewById(R.id.registrationEnd);
@@ -51,10 +50,7 @@ public class ScheduleFragment extends Fragment {
         addDrop = view.findViewById(R.id.addDrop);
         terFillUp = view.findViewById(R.id.terFillUp);
 
-        // Reference to the Firebase Database
         databaseReference = FirebaseDatabase.getInstance().getReference("Semesters");
-
-        // Fetch data from the database
         fetchSemesterData();
 
         return view;
@@ -78,7 +74,6 @@ public class ScheduleFragment extends Fragment {
                         String addDropStart = semesterSnapshot.child("addDrop").getValue(String.class);
                         String terFillUpStart = semesterSnapshot.child("terFillUp").getValue(String.class);
 
-                        // Set text size to 18dp
                         semesterName.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
                         registrationStart.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
                         registrationEnd.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
@@ -90,13 +85,14 @@ public class ScheduleFragment extends Fragment {
                         addDrop.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
                         terFillUp.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
 
-                        // Set values to TextViews
+
                         semesterName.setText(semester);
                         registrationStart.setText(regStart);
                         registrationEnd.setText(regEnd);
                         classStart.setText(classStartDate);
                         classEnd.setText(classEndDate);
                         midTermStart.setText(midTerm);
+
                         finalExamStart.setText(finalExam);
                         semesterDrop.setText(dropLast);
                         addDrop.setText(addDropStart);
@@ -107,7 +103,7 @@ public class ScheduleFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle error, e.g., log the error or display a message to the user
+
             }
         });
     }

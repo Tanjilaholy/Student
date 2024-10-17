@@ -1,48 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".uploadRoutine">
-
+    tools:context=".uploadRoutine"
+    android:padding="16dp"
+    android:background="@color/blu">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/routine"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="wrap_content"
+    android:id="@+id/routine"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/white"
+    android:elevation="4dp">
 
-        <!-- Section Selection Spinner -->
-        <TextView
-            android:id="@+id/select_section_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Select Section:"
-            android:textSize="16sp" />
+    <TextView
+        android:id="@+id/select_section_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Section:"
+        android:textSize="20sp"
+    android:textColor="@color/black" />
 
-        <Spinner
-            android:id="@+id/sectionSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="8dp" />
+    <Spinner
+        android:id="@+id/sectionSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+    android:layout_marginTop="8dp"
+    android:background="@android:color/transparent"
+    android:popupBackground="@color/white" />
 
-        <TextView
-            android:id="@+id/routine_image_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Routine Image:"
-            android:textSize="16sp" />
+    <TextView
+        android:id="@+id/routine_image_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Routine Image:"
+        android:textSize="20sp"
+    android:textColor="@color/black" />
 
-        <ImageView
-            android:id="@+id/selectedImageView"
-            android:layout_width="match_parent"
-            android:layout_height="365dp"
-            android:layout_marginTop="8dp"
-            android:background="@color/white"
-            android:scaleType="fitCenter" />
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/selectedImageView"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+    android:layout_marginTop="8dp"
+    android:background="@color/white"
+    android:scaleType="fitCenter" />
+
 </LinearLayout>
+    </LinearLayout>
